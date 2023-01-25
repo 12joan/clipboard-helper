@@ -75,3 +75,31 @@ Stimulus.register('copy', class extends Controller {
       : typeSelectValue
   }
 })
+
+Stimulus.register('inspect', class extends Controller {
+  static targets = ['paste']
+
+  async handlePaste(event) {
+    event.preventDefault()
+
+    const items = Array.from(event.clipboardData.items)
+
+    const output = await Promise.all(items.map(item => new Promise(resolve => {
+      switch (item.kind) {
+        case 'string':
+          item.getAsString(value => resolve(`[${item.type}]:\n${value}`))
+          break
+
+        case 'file':
+          const file = item.getAsFile()
+          resolve(`File: ${file.name} (${file.type})`)
+          break
+
+        default:
+          resolve(`Unknown item kind: ${item.kind}`)
+      }
+    }))).then(outputs => outputs.join('\n\n'))
+
+    this.pasteTarget.value = output
+  }
+})
