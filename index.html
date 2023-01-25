@@ -1,1 +1,68 @@
-<h1>Initial commit</h1>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Clipboard Helper</title>
+
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+
+    <script type="module" src="main.js"></script>
+  </head>
+
+  <body class="p-5 bg-gray-50 text-gray-700 space-y-10">
+    <h1 class="text-2xl font-medium">Clipboard Helper</h1>
+
+    <div class="grid md:grid-cols-2 gap-10">
+      <div data-controller="copy" class="space-y-3">
+        <h2 class="text-xl font-medium">Copy to clipboard</h2>
+
+        <label class="block space-y-1">
+          <span class="font-medium">Data</span>
+
+          <textarea
+            data-copy-target="data"
+            placeholder="Enter some data to copy"
+            class="w-full p-2 border border-gray-300 rounded-lg"
+            rows="10"
+          ></textarea>
+        </label>
+
+        <label class="block space-y-1">
+          <span class="font-medium">Type</span>
+
+          <select
+            data-copy-target="typeSelect"
+            data-action="change->copy#handleTypeSelectChanged"
+            class="w-full p-2 border border-gray-300 rounded-lg bg-white"
+          >
+            <option value="text/plain" selected>text/plain</option>
+            <option value="text/html">text/html</option>
+            <option value="other">Other</option>
+          </select>
+
+          <input
+            data-copy-target="typeOther"
+            placeholder="Enter a custom type"
+            class="w-full p-2 border border-gray-300 rounded-lg"
+            hidden
+          />
+        </label>
+
+        <button
+          data-copy-target="copyButton"
+          data-action="copy#performCopy"
+          class="w-full p-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-100"
+        >
+          📋 Copy to clipboard
+        </button>
+      </div>
+
+      <div class="space-y-3">
+        <h2 class="text-xl font-medium">Inspect clipboard</h2>
+        <p class="text-gray-500">Not implemented yet</p>
+      </div>
+    </div>
+  </body>
+</html>
